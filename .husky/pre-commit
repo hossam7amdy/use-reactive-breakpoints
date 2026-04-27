@@ -1,0 +1,3 @@
+pnpm test
+prettier --write .
+git add -u
