@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { useBreakpoint } from "./index";
+import { useReactiveBreakpoints } from "./index";
 
-const breakpointDemo = () => {
-  const breakpoint = useBreakpoint();
+const breakpointsDemo = () => {
+  const breakpoint = useReactiveBreakpoints();
 
   return (
     <section
@@ -66,15 +66,15 @@ const breakpointDemo = () => {
   );
 };
 
-const meta: Meta<typeof breakpointDemo> = {
-  title: "Hooks/useBreakpoint",
-  component: breakpointDemo,
+const meta: Meta<typeof breakpointsDemo> = {
+  title: "Hooks/useReactiveBreakpoints",
+  component: breakpointsDemo,
   parameters: {
     layout: "fullscreen",
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof breakpointDemo>;
+type Story = StoryObj<typeof breakpointsDemo>;
 
 export const Default: Story = {};

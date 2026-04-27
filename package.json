@@ -1,11 +1,11 @@
 {
-  "name": "use-reactive-breakpoint",
+  "name": "use-reactive-breakpoints",
   "version": "1.0.0",
   "description": "React utility hook for getting breakpoint",
-  "homepage": "https://github.com/hossam7amdy/use-reactive-breakpoint#readme",
+  "homepage": "https://github.com/hossam7amdy/use-reactive-breakpoints#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hossam7amdy/use-reactive-breakpoint"
+    "url": "https://github.com/hossam7amdy/use-reactive-breakpoints"
   },
   "main": "./dist/cjs/index.js",
   "types": "./dist/cjs/index.d.ts",
@@ -47,7 +47,7 @@
     "media-query",
     "tailwindcss"
   ],
-  "author": "Hossam Hamdy <[EMAIL_ADDRESS]>",
+  "author": "Hossam Hamdy <hossamhamdy117@gmail.com>",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
   "devDependencies": {

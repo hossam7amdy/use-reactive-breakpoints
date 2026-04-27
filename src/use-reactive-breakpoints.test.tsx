@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { useBreakpoint } from "./use-breakpoint";
+import { useReactiveBreakpoints } from "./use-reactive-breakpoints";
 
 function mockMatchMedia(width: number) {
   return (query: string): MediaQueryList => {
@@ -19,10 +19,10 @@ function mockMatchMedia(width: number) {
   };
 }
 
-describe("useBreakpoint", () => {
+describe("useReactiveBreakpoints", () => {
   it("returns all false when viewport is 0px", () => {
     window.matchMedia = mockMatchMedia(0);
-    const { result } = renderHook(() => useBreakpoint());
+    const { result } = renderHook(() => useReactiveBreakpoints());
     expect(result.current).toEqual({
       xs: false,
       sm: false,
@@ -35,7 +35,7 @@ describe("useBreakpoint", () => {
 
   it("returns sm: true when viewport is exactly 640px", () => {
     window.matchMedia = mockMatchMedia(640);
-    const { result } = renderHook(() => useBreakpoint());
+    const { result } = renderHook(() => useReactiveBreakpoints());
     expect(result.current).toEqual({
       xs: false,
       sm: true,
@@ -48,7 +48,7 @@ describe("useBreakpoint", () => {
 
   it("returns sm, md, lg true when viewport is 1024px", () => {
     window.matchMedia = mockMatchMedia(1024);
-    const { result } = renderHook(() => useBreakpoint());
+    const { result } = renderHook(() => useReactiveBreakpoints());
     expect(result.current).toEqual({
       xs: false,
       sm: true,
@@ -61,7 +61,7 @@ describe("useBreakpoint", () => {
 
   it("returns all true when viewport is 1536px", () => {
     window.matchMedia = mockMatchMedia(1536);
-    const { result } = renderHook(() => useBreakpoint());
+    const { result } = renderHook(() => useReactiveBreakpoints());
     expect(result.current).toEqual({
       xs: false,
       sm: true,
@@ -92,7 +92,7 @@ describe("useBreakpoint", () => {
       } as unknown as MediaQueryList;
     });
 
-    const { result } = renderHook(() => useBreakpoint());
+    const { result } = renderHook(() => useReactiveBreakpoints());
     expect(result.current.sm).toBe(false);
 
     currentWidth = 640;
@@ -130,7 +130,7 @@ describe("useBreakpoint", () => {
       } as unknown as MediaQueryList;
     });
 
-    const { result } = renderHook(() => useBreakpoint());
+    const { result } = renderHook(() => useReactiveBreakpoints());
     expect(result.current.sm).toBe(false);
     expect(result.current.md).toBe(false);
     expect(result.current.lg).toBe(false);
@@ -159,7 +159,7 @@ describe("useBreakpoint", () => {
       removeEventListener,
       dispatchEvent: vi.fn(),
     });
-    const { unmount } = renderHook(() => useBreakpoint());
+    const { unmount } = renderHook(() => useReactiveBreakpoints());
     unmount();
     expect(removeEventListener).toHaveBeenCalledTimes(6);
   });

@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 
-// Match tailwind's v4 default breakpoint https://tailwindcss.com/docs/responsive-design#overview
-const breakpoint = {
+// Match tailwind's v4 default breakpoints https://tailwindcss.com/docs/responsive-design#overview
+const breakpoints = {
   xs: "(max-width: 639px)",
   sm: "(min-width: 640px)",
   md: "(min-width: 768px)",
@@ -10,7 +10,7 @@ const breakpoint = {
   "2xl": "(min-width: 1536px)",
 } as const;
 
-export type breakpoint = {
+export type Breakpoints = {
   /** width < 640px */
   xs: boolean;
   /** width >= 640px */
@@ -25,7 +25,7 @@ export type breakpoint = {
   "2xl": boolean;
 };
 
-const SERVER_SNAPSHOT: breakpoint = {
+const SERVER_SNAPSHOT: Breakpoints = {
   xs: true,
   sm: false,
   md: false,
@@ -35,10 +35,10 @@ const SERVER_SNAPSHOT: breakpoint = {
 };
 
 // https://react.dev/reference/react/useSyncExternalStore#im-getting-an-error-the-result-of-getsnapshot-should-be-cached
-let cachedSnapshot: breakpoint = SERVER_SNAPSHOT;
+let cachedSnapshot: Breakpoints = SERVER_SNAPSHOT;
 
 function subscribe(callback: () => void) {
-  const mqls = Object.values(breakpoint).map((query) => {
+  const mqls = Object.values(breakpoints).map((query) => {
     const mql = window.matchMedia(query);
     mql.addEventListener("change", callback);
     return mql;
@@ -47,13 +47,13 @@ function subscribe(callback: () => void) {
     mqls.forEach((mql) => mql.removeEventListener("change", callback));
 }
 
-function getSnapshot(): breakpoint {
-  const next = {} as breakpoint;
-  for (const [key, query] of Object.entries(breakpoint)) {
-    next[key as keyof breakpoint] = window.matchMedia(query).matches;
+function getSnapshot(): Breakpoints {
+  const next = {} as Breakpoints;
+  for (const [key, query] of Object.entries(breakpoints)) {
+    next[key as keyof Breakpoints] = window.matchMedia(query).matches;
   }
 
-  const keys = Object.keys(next) as (keyof breakpoint)[];
+  const keys = Object.keys(next) as (keyof Breakpoints)[];
   const changed = keys.some((key) => cachedSnapshot[key] !== next[key]);
   if (!changed) return cachedSnapshot;
 
@@ -61,6 +61,6 @@ function getSnapshot(): breakpoint {
   return cachedSnapshot;
 }
 
-export function useBreakpoint(): breakpoint {
+export function useReactiveBreakpoints(): Breakpoints {
   return useSyncExternalStore(subscribe, getSnapshot, () => SERVER_SNAPSHOT);
 }

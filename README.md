@@ -7,20 +7,20 @@ Under the hood, it leverages `useSyncExternalStore` for SSR safety and maximum p
 ## Installation
 
 ```bash
-npm install use-reactive-breakpoint
+npm install use-reactive-breakpoints
 # or
-yarn add use-reactive-breakpoint
+yarn add use-reactive-breakpoints
 # or
-pnpm add use-reactive-breakpoint
+pnpm add use-reactive-breakpoints
 ```
 
 ## Usage
 
 ```tsx
-import { useBreakpoint } from "use-reactive-breakpoint";
+import { useReactiveBreakpoints } from "use-reactive-breakpoints";
 
 function App() {
-  const breakpoint = useBreakpoint();
+  const breakpoint = useReactiveBreakpoints();
 
   return (
     <div>
@@ -38,33 +38,35 @@ function App() {
 export default App;
 ```
 
-## breakpoint
+## Breakpoints
 
-This hook provides boolean flags corresponding to the following minimum viewport widths (matching Tailwind CSS defaults):
+This hook provides boolean flags corresponding to the following viewport widths (matching Tailwind CSS defaults):
 
-| Breakpoint | Minimum Width | CSS Media Query              |
-| :--------- | :------------ | :--------------------------- |
-| `sm`       | 640px         | `@media (min-width: 640px)`  |
-| `md`       | 768px         | `@media (min-width: 768px)`  |
-| `lg`       | 1024px        | `@media (min-width: 1024px)` |
-| `xl`       | 1280px        | `@media (min-width: 1280px)` |
-| `2xl`      | 1536px        | `@media (min-width: 1536px)` |
+| Breakpoint | Width Range | CSS Media Query              |
+| :--------- | :---------- | :--------------------------- |
+| `xs`       | < 640px     | `@media (max-width: 639px)`  |
+| `sm`       | >= 640px    | `@media (min-width: 640px)`  |
+| `md`       | >= 768px    | `@media (min-width: 768px)`  |
+| `lg`       | >= 1024px   | `@media (min-width: 1024px)` |
+| `xl`       | >= 1280px   | `@media (min-width: 1280px)` |
+| `2xl`      | >= 1536px   | `@media (min-width: 1536px)` |
 
-_Note: The object returned defaults to `false` for all breakpoint on the server (SSR)._
+_Note: On the server (SSR), the hook returns a mobile-first snapshot — `xs: true` and all other breakpoints `false`._
 
 ## API Reference
 
-### `useBreakpoint()`
+### `useReactiveBreakpoints()`
 
-Returns an object of type `breakpoint`:
+Returns an object of type `Breakpoints`:
 
 ```ts
-type breakpoint = {
-  sm: boolean; /** matches width >= 640px */
-  md: boolean; /** matches width >= 768px */
-  lg: boolean; /** matches width >= 1024px */
-  xl: boolean; /** matches width >= 1280px */
-  "2xl": boolean; /** matches width >= 1536px */
+type Breakpoints = {
+  xs: boolean; /** width < 640px */
+  sm: boolean; /** width >= 640px */
+  md: boolean; /** width >= 768px */
+  lg: boolean; /** width >= 1024px */
+  xl: boolean; /** width >= 1280px */
+  "2xl": boolean; /** width >= 1536px */
 };
 ```
 
